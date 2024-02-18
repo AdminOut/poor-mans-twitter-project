@@ -35,7 +35,7 @@
                 </th>
                 <th>Message</th>
                 <th>
-                  Created At
+                  Time
                   <button class="button button-clear" @click="changeOrder('created_at')" style="font-size: large;">↑</button>
                   <button class="button button-clear" @click="changeOrder('-created_at')" style="font-size: large;">↓</button>
                 </th>
