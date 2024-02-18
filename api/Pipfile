@@ -12,6 +12,7 @@ django = "*"
 djangorestframework = "*"
 django-cors-headers = "*"
 importlib-metadata = "*"
+python-dotenv = "*"
 
 [requires]
 python_version = "3.9"

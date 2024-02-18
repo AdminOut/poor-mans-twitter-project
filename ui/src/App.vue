@@ -18,13 +18,19 @@
       <div class="tweets_container">
           <div class="tweets_content">
               <h1>Tweets</h1>
+              <div>
+                <select v-model="orderBy" @change="getTweets">
+                  <option value="name" default>Order by Name Asc</option>
+                  <option value="-name" default>Order by Name Desc</option>
+                  <option value="created_at">Order By Time Asc</option>
+                  <option value="-created_at">Order By Time Desc</option>
+                </select>
+              </div>
               <ul class="tweets_list">
                   <li v-for="tweet in tweets" :key="tweet.name">
                       <h5>{{tweet.name}}</h5>
                       <p>{{ tweet.message }}</p>
                       <p>{{ tweet.created_at }}</p>
-                      
-                      
                   </li>
               </ul>
           </div>
@@ -40,6 +46,7 @@
           name:'App',
           data() {
               return {
+                orderBy: '-created_at',
                 tweet: {
                   name:'',
                   message:'',
@@ -57,8 +64,9 @@
   
           methods: {
               async getTweets(){
-                  var response=await fetch ('http://127.0.0.1:8000/tweets/')
-                  this.tweets = await response.json();
+                const orderingQuery = `?ordering=${this.orderBy}`;
+                var response = await fetch(`http://127.0.0.1:8000/tweets/${orderingQuery}`);
+                this.tweets = await response.json();
               },
             
               async createTweet(){

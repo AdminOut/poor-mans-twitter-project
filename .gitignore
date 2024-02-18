@@ -3,3 +3,4 @@
 .idea
 *.hot-update.js
 *.hot-update.json
+api/.env
