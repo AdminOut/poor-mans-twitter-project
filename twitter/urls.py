@@ -1,10 +1,12 @@
-
 from twitter.views import TweetList
 from rest_framework import routers
-router=routers.DefaultRouter()
-router.register('tweetsc', TweetList)
+from django.urls import path, include
+from twitter.views import tweet_list
 
-urlpatterns = router.urls
-# [
-#     path('tweets/', Tweet_list, name='tweet-list'),
-# ]
+router = routers.DefaultRouter()
+router.register("tweets", TweetList)
+
+urlpatterns = [
+    path("", include(router.urls)),
+    path("tweets_list/", tweet_list, name="tweet-list"),
+]

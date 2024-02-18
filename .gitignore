@@ -1,3 +1,5 @@
 /vuepmtwitter/node_modules
 /twitter/migrations
 .idea
+*.hot-update.js
+*.hot-update.json

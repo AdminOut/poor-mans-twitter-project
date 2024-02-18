@@ -57,23 +57,24 @@
   
           methods: {
               async getTweets(){
-                  var response=await fetch ('http://127.0.0.1:8000/tweetsc/')
+                  var response=await fetch ('http://127.0.0.1:8000/tweets/')
                   this.tweets = await response.json();
               },
             
               async createTweet(){
-                await this.getTweets();
-
-                await fetch('http://localhost:8000/tweetsc/', {
+                const response = await fetch('http://localhost:8000/tweets/', {
                   method: 'post',
                   headers:{
                     'Content-Type':'application/json'
                 },
                   body: JSON.stringify(this.tweet)
                 });
-                // this.tweets.push(await response.json());
-                await this.getTweets();
-
+                this.tweets.push(await response.json());
+                this.tweet = {
+                  name:'',
+                  message:'',
+                  created_at:''
+                }
               },
               },
           };
