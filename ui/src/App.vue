@@ -1,41 +1,56 @@
 <template>
-  <div class="add_tweet" id="app">
+  <div class="container add_tweet" id="app">
       <form v-on:submit.prevent="createTweet">
-          <div class="form-group">
-              <label for="name">Name</label>
-              <input type="text" class="form-control" id="name" v-model="tweet.name">
-          </div>
-          <div class="form-group">
-              <label for="message">Message</label>
-              <textarea class="form-control" id="message" v-model="tweet.message"></textarea>
-          </div>
-          
-          <div class="form-group">
-              <button type="submit">Add tweet</button>
+          <div class="row">
+            <div class="column">
+              <div class="form-group">
+                  <label for="name" style="display: block;">Name</label>
+                  <input type="text" class="form-control" id="name" style="height: 65px" v-model="tweet.name">
+              </div>
+            </div>
+            <div class="column">
+              <div class="form-group">
+                  <label for="message" style="display: block;">Message</label>
+                  <textarea class="form-control" id="message" v-model="tweet.message" maxlength="100"></textarea>
+              </div>
+            </div>
+            <div class="column">
+              <div class="form-group">
+                <label style="display: block;">&#160;</label>
+                  <button class="button button-outline" type="submit">Add tweet</button>
+              </div>
+            </div>
           </div>
       </form>
   </div>
-      <div class="tweets_container">
-          <div class="tweets_content">
-              <h1>Tweets</h1>
-              <div>
-                <select v-model="orderBy" @change="getTweets">
-                  <option value="name" default>Order by Name Asc</option>
-                  <option value="-name" default>Order by Name Desc</option>
-                  <option value="created_at">Order By Time Asc</option>
-                  <option value="-created_at">Order By Time Desc</option>
-                </select>
-              </div>
-              <ul class="tweets_list">
-                  <li v-for="tweet in tweets" :key="tweet.name">
-                      <h5>{{tweet.name}}</h5>
-                      <p>{{ tweet.message }}</p>
-                      <p>{{ tweet.created_at }}</p>
-                  </li>
-              </ul>
-          </div>
-      </div>
-  </template>
+  <div class="container tweets_container">
+    <h1>Tweets</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>
+                  Name
+                  <button class="button button-clear" @click="changeOrder('name')" style="font-size: large;">↑</button>
+                  <button class="button button-clear" @click="changeOrder('-name')" style="font-size: large;">↓</button>
+                </th>
+                <th>Message</th>
+                <th>
+                  Created At
+                  <button class="button button-clear" @click="changeOrder('created_at')" style="font-size: large;">↑</button>
+                  <button class="button button-clear" @click="changeOrder('-created_at')" style="font-size: large;">↓</button>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="tweet in tweets" :key="tweet.id">
+                <td>{{ tweet.name }}</td>
+                <td>{{ tweet.message }}</td>
+                <td>{{ tweet.created_at }}</td>
+            </tr>
+        </tbody>
+    </table>
+  </div>
+</template>
   
   
   
@@ -68,7 +83,10 @@
                 var response = await fetch(`http://127.0.0.1:8000/tweets/${orderingQuery}`);
                 this.tweets = await response.json();
               },
-            
+              changeOrder(orderBy) {
+                this.orderBy = orderBy;
+                this.getTweets();
+              },
               async createTweet(){
                 const response = await fetch('http://localhost:8000/tweets/', {
                   method: 'post',
