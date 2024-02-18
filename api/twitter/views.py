@@ -39,7 +39,7 @@ def tweet_list(request):
 
         # context = JSONRenderer().render(serializer.data)
         # context=serializer.data
-        return render(request, "home.html", {"tweets": serializer.data})
+        return render(request, "home.html", {"twitter": serializer.data})
         # JsonResponse(serializer.data,safe=False)
         # return Response(serializer.data)
 
